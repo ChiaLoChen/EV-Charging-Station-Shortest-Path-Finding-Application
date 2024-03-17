@@ -14,9 +14,9 @@ using namespace std;
 //Graph Variables
 
 int numberofVertices;
-int distanceMatrix[100][100]; //Representation of the graph and it's paths/distances
+int distanceMatrix[23][23]; //Representation of the graph and it's paths/distances
 int startingPoint;
-int distanceArray[100]; //Storing the distance values for the number of nodes, with respect to the starting point
+int distanceArray[23]; //Storing the distance values for the number of nodes, with respect to the starting point
 int parentArray[100]; //Index represents key for the node, value represents the parent
 bool nodeVisited[100] = {0}; // Has a node been visited? Here we initialize it to 0
 
