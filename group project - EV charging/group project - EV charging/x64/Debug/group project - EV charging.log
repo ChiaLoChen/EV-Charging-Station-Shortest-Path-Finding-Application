@@ -1,1 +1,3 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(439,5): error MSB8020: The build tools for v143 (Platform Toolset = 'v143') cannot be found. To build using the v143 build tools, please install v143 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+﻿  group project - EV charging.cpp
+C:\Users\User\Desktop\Personal Proposal\EV-Charging-Station-Shortest-Path-Finding-Application\group project - EV charging\group project - EV charging\group project - EV charging.cpp(73): warning C4715: 'locationName': not all control paths return a value
+  group project - EV charging.vcxproj -> C:\Users\User\Desktop\Personal Proposal\EV-Charging-Station-Shortest-Path-Finding-Application\group project - EV charging\x64\Debug\group project - EV charging.exe

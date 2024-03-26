@@ -15,12 +15,139 @@ using namespace std;
 
 int numberofVertices;
 int distanceMatrix[23][23]; //Representation of the graph and it's paths/distances
-int startingPoint;
+string startingPoint;
 int distanceArray[23]; //Storing the distance values for the number of nodes, with respect to the starting point
 int parentArray[100]; //Index represents key for the node, value represents the parent
 bool nodeVisited[100] = {0}; // Has a node been visited? Here we initialize it to 0
 
-
+string locationName(int value) {
+    switch (value)
+    {
+    case 0:
+        return "A";
+    case 1:
+        return "B";
+    case 2:
+        return "C";
+    case 3:
+        return "D";
+    case 4:
+        return "E";
+    case 5:
+        return "F";
+    case 6:
+        return "G";
+    case 7:
+        return "H";
+    case 8:
+        return "I";
+    case 9:
+        return "J";
+    case 10:
+        return "K";
+    case 11:
+        return "L";
+    case 12:
+        return "M";
+    case 13:
+        return "N";
+    case 14:
+        return "O";
+    case 15:
+        return "P";
+    case 16:
+        return "Q";
+    case 17:
+        return "R";
+    case 18:
+        return "S";
+    case 19:
+        return "T";
+    case 20:
+        return "U";
+    case 21:
+        return "V";
+    case 22:
+        return "W";
+    }
+}
+string toLowercase(const string& str) {
+    string lowerStr = str;
+    transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(),
+              [](unsigned char c) { return tolower(c); });
+    return lowerStr;
+}
+int location(string name) {
+    if (toLowercase(name) == "a") {
+        return 0;
+    }
+    if (toLowercase(name) == "b") {
+        return 1;
+    }
+    if (toLowercase(name) == "c") {
+        return 2;
+    }
+    if (toLowercase(name) == "d") {
+        return 3;
+    }
+    if (toLowercase(name) == "e") {
+        return 4;
+    }
+    if (toLowercase(name) == "f") {
+        return 5;
+    }
+    if (toLowercase(name) == "g") {
+        return 6;
+    }
+    if (toLowercase(name) == "h") {
+        return 7;
+    }
+    if (toLowercase(name) == "i") {
+        return 8;
+    }
+    if (toLowercase(name) == "j") {
+        return 9;
+    }
+    if (toLowercase(name) == "k") {
+        return 10;
+    }
+    if (toLowercase(name) == "l") {
+        return 11;
+    }
+    if (toLowercase(name) == "m") {
+        return 12;
+    }
+    if (toLowercase(name) == "n") {
+        return 13;
+    }
+    if (toLowercase(name) == "o") {
+        return 14;
+    }
+    if (toLowercase(name) == "p") {
+        return 15;
+    }
+    if (toLowercase(name) == "q") {
+        return 16;
+    }
+    if (toLowercase(name) == "r") {
+        return 17;
+    }
+    if (toLowercase(name) == "s") {
+        return 18;
+    }
+    if (toLowercase(name) == "t") {
+        return 19;
+    }
+    if (toLowercase(name) == "u") {
+        return 20;
+    }
+    if (toLowercase(name) == "v") {
+        return 21;
+    }
+    if (toLowercase(name) == "w") {
+        return 22;
+    }
+}
 void initializeDistances() //Function to initialize distance values
 {
     for (int i = 0; i < numberofVertices; i++)
@@ -29,7 +156,7 @@ void initializeDistances() //Function to initialize distance values
         //distanceArray[i] = infinity;
         distanceArray[i] = 99;
     }
-    distanceArray[startingPoint] = 0;
+    distanceArray[location(startingPoint)] = 0;
 }
 
 int getClosestNode() //Returns the closest unvisited node
@@ -79,7 +206,7 @@ void showGraph()
         cout << i << " ";
         int parentNode = parentArray[i];
 
-        while (parentNode != startingPoint)
+        while (parentNode != location(startingPoint))
         {
             cout << " <-- " << parentNode << " ";
             parentNode = parentArray[parentNode];
@@ -94,43 +221,42 @@ class nodes {
 
 int main()
 {
-   /* string myText;
+    string myText;
     string file_contents;
-    ifstream MyReadFile("");
+    ifstream MyReadFile("EVChargeStation.csv");
     if (MyReadFile.is_open()) {
         while (getline(MyReadFile, myText)) {
             stringstream ss(myText);
             string token;
+            int numRows = 0;
 
-            getline(ss, token, ',');
-            id = stoi(token);
+            string line;
+            while (getline(MyReadFile, line) && numRows < 23) {
+                stringstream ss(line);
+                int col = 0;
 
-            getline(ss, token, ',');
-            name = trim(token);
+                while (getline(ss, line, ',') && col < 23) {
+                    // Convert string to integer
+                    distanceMatrix[numRows][col] = stoi(line);
+                    col++;
+                }
 
-            getline(ss, token, ',');
-            price = stof(token);
+                numRows++;
+            }
 
-            getline(ss, token, ',');
-            category = trim(token);
-
-            ss >> id >> name >> price >> category;
-            products.push_back(Product(id, name, price, category));
-        }
-    }*/
-
-    //Taking User Input to build the graph
-    cout << "Please input the number of vertices: " << endl;
-    cin >> numberofVertices;
-    for (int i = 0; i < numberofVertices; i++)
-    {
-        for (int j = 0; j < numberofVertices; j++)
-        {
-            cin >> distanceMatrix[i][j];
+            MyReadFile.close();
         }
     }
 
-    cout << "Please input the Starting Node: " << endl;
+    //Taking User Input to build the graph
+    for (int i = 0; i < 23; ++i) {
+        for (int j = 0; j < 23; ++j) {
+            cout << distanceMatrix[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    cout << "Please input the Starting Node: A to W" << endl;
     cin >> startingPoint;
     initializeDistances();
     dijkstraAlgorithm();
