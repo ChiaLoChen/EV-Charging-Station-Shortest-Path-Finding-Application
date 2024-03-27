@@ -14,6 +14,7 @@ using namespace std;
 //Graph Variables
 
 int numberofVertices = 23;
+int currentVertices;
 int distanceMatrix[23][23]; //Representation of the graph and it's paths/distances
 string startingPoint;
 int distanceArray[23]; //Storing the distance values for the number of nodes, with respect to the starting point
@@ -165,7 +166,7 @@ int getClosestNode() //Returns the closest unvisited node
     int minimumDistanceValue = 99;
     int closestNode = 0;
 
-    for (int i = 0; i < numberofVertices; i++)
+    for (int i = 0; i < 23; i++)
     {
         if (!nodeVisited[i] && distanceArray[i] < minimumDistanceValue)
         { //If a node is unvisited and its distance is less than current minimum value, update the current minimum value to a lower distance, as well as the value of the closest node
@@ -178,12 +179,15 @@ int getClosestNode() //Returns the closest unvisited node
 
 void dijkstraAlgorithm()
 {
+    bool out = false;
+    int shortest = 0;
+    int visitCount = 0;
     for (int i = 0; i < numberofVertices; i++) //Should run until all nodes are visited
     {
         int closestUnvisitedNode = getClosestNode();
         nodeVisited[closestUnvisitedNode] = true; //Marking the closest unvisited node as visited
 
-        for (int nearbyNode = 0; nearbyNode < numberofVertices; nearbyNode++)
+        for (int nearbyNode = 0; nearbyNode < 23; nearbyNode++)
         {
             //If the closest node is not 99, it is nearby. Updates distance only if the newer distance of the node is lesser than.
             if (distanceMatrix[closestUnvisitedNode][nearbyNode] != 0 &&  distanceArray[nearbyNode] > distanceArray[closestUnvisitedNode] + distanceMatrix[closestUnvisitedNode][nearbyNode])
@@ -193,6 +197,25 @@ void dijkstraAlgorithm()
             }
         }
     }
+    /*while (!out) {
+        for (int i = 0; i < 23; i++) {
+            if (distanceMatrix[currentVertices][i] > 0) {
+                parentArray[i] += distanceMatrix[currentVertices][i];
+            }
+        }
+        nodeVisited[currentVertices] = true;
+        visitCount++;
+        for (int i = 0; i < 23; i++) {
+            if (parentArray[i] < parentArray[shortest] && !nodeVisited[i]) {
+                shortest = i;
+            }
+        }
+        currentVertices = shortest;
+        if (visitCount >= 23) {
+            out = true;
+        }
+    }*/
+
 }
 
 void showGraph()
@@ -215,9 +238,6 @@ void showGraph()
     }
 }
 
-class nodes {
-
-};
 
 int main()
 {
@@ -270,8 +290,10 @@ int main()
 
     cout << "Please input the Starting Node: A to W" << endl;
     cin >> startingPoint;
+    currentVertices = location(startingPoint);
     initializeDistances();
     dijkstraAlgorithm();
+
     showGraph();
 
 }
