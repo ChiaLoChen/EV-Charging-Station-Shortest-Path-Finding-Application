@@ -13,12 +13,12 @@ using namespace std;
 
 //Graph Variables
 
-int numberofVertices;
+int numberofVertices = 23;
 int distanceMatrix[23][23]; //Representation of the graph and it's paths/distances
 string startingPoint;
 int distanceArray[23]; //Storing the distance values for the number of nodes, with respect to the starting point
-int parentArray[100]; //Index represents key for the node, value represents the parent
-bool nodeVisited[100] = {0}; // Has a node been visited? Here we initialize it to 0
+int parentArray[23]; //Index represents key for the node, value represents the parent
+bool nodeVisited[23] = {0}; // Has a node been visited? Here we initialize it to 0
 
 string locationName(int value) {
     switch (value)
@@ -186,7 +186,7 @@ void dijkstraAlgorithm()
         for (int nearbyNode = 0; nearbyNode < numberofVertices; nearbyNode++)
         {
             //If the closest node is not 99, it is nearby. Updates distance only if the newer distance of the node is lesser than.
-            if (distanceMatrix[closestUnvisitedNode][nearbyNode] != 99 &&  distanceArray[nearbyNode] > distanceArray[closestUnvisitedNode] + distanceMatrix[closestUnvisitedNode][nearbyNode])
+            if (distanceMatrix[closestUnvisitedNode][nearbyNode] != 0 &&  distanceArray[nearbyNode] > distanceArray[closestUnvisitedNode] + distanceMatrix[closestUnvisitedNode][nearbyNode])
             {
                 distanceArray[nearbyNode] = distanceArray[closestUnvisitedNode] + distanceMatrix[closestUnvisitedNode][nearbyNode]; //Updating the distance of a nearby node to the distance of the closest node
                 parentArray[nearbyNode] = closestUnvisitedNode;
@@ -199,11 +199,11 @@ void showGraph()
 {
     cout << "Node: \t\t\t Closest Distance: \t\t\t Closest Node";
 
-    for (int i = 0; i < numberofVertices; i++)
+    for (int i = 0; i < 23; i++)
     {
-        cout << i << "\t\t\t" << distanceArray[i] << "\t\t\t" << " ";
+        cout << locationName(i) << "\t\t\t" << distanceArray[i] << "\t\t\t" << " ";
 
-        cout << i << " ";
+        cout << locationName(i) << " ";
         int parentNode = parentArray[i];
 
         while (parentNode != location(startingPoint))
@@ -249,9 +249,21 @@ int main()
     }
 
     //Taking User Input to build the graph
-    for (int i = 0; i < 23; ++i) {
+    cout << "   ";
+    for (int i = 0; i < 23; i++) {
+        cout << locationName(i);
+        if (i < 22) {
+            cout << ", ";
+        }
+    }
+    cout << endl;
+    for (int i = 0; i < 23; i++) {
+        cout << locationName(i) << ": ";
         for (int j = 0; j < 23; ++j) {
-            cout << distanceMatrix[i][j] << "\t";
+            cout << distanceMatrix[i][j];
+            if (j < 22) {
+                cout << ", ";
+            }
         }
         cout << endl;
     }

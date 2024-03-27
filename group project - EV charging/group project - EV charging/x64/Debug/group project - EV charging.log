@@ -1,3 +1,4 @@
 ﻿  group project - EV charging.cpp
 C:\Users\User\Desktop\Personal Proposal\EV-Charging-Station-Shortest-Path-Finding-Application\group project - EV charging\group project - EV charging\group project - EV charging.cpp(73): warning C4715: 'locationName': not all control paths return a value
+C:\Users\User\Desktop\Personal Proposal\EV-Charging-Station-Shortest-Path-Finding-Application\group project - EV charging\group project - EV charging\group project - EV charging.cpp(150): warning C4715: 'location': not all control paths return a value
   group project - EV charging.vcxproj -> C:\Users\User\Desktop\Personal Proposal\EV-Charging-Station-Shortest-Path-Finding-Application\group project - EV charging\x64\Debug\group project - EV charging.exe
