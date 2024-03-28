@@ -199,7 +199,6 @@ void dijkstraAlgorithm()
 
 void showGraph()
 {
-    cout << "Node: \t\t\t Closest Distance: \t\t\t Closest Node\n";
     int shortest = 0;
     for (int i = 0; i < 4; i++) {
         if (distanceArray[chargeStation[i]] < distanceArray[chargeStation[shortest]]) {
@@ -259,7 +258,7 @@ int main()
     }
 
     //Taking User Input to build the graph
-    cout << "   ";
+    /*cout << "   ";
     for (int i = 0; i < 23; i++) {
         cout << locationName(i);
         if (i < 22) {
@@ -279,7 +278,7 @@ int main()
             }
         }
         cout << endl;
-    }
+    }*/
 
 
     cout << "Please input the Starting Node: A to W" << endl;
