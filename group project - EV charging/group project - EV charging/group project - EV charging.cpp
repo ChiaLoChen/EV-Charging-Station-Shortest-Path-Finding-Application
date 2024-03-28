@@ -7,7 +7,6 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <chrono>
 using namespace std;
 //#define infinity = 99;
 
@@ -20,6 +19,7 @@ string startingPoint;
 int distanceArray[23]; //Storing the distance values for the number of nodes, with respect to the starting point
 int parentArray[23]; //Index represents key for the node, value represents the parent
 bool nodeVisited[23] = {0}; // Has a node been visited? Here we initialize it to 0
+int chargeStation[4] = { 7, 10, 16, 19 };
 
 string locationName(int value) {
     switch (value)
@@ -179,9 +179,6 @@ int getClosestNode() //Returns the closest unvisited node
 
 void dijkstraAlgorithm()
 {
-    bool out = false;
-    int shortest = 0;
-    int visitCount = 0;
     for (int i = 0; i < numberofVertices; i++) //Should run until all nodes are visited
     {
         int closestUnvisitedNode = getClosestNode();
@@ -197,32 +194,20 @@ void dijkstraAlgorithm()
             }
         }
     }
-    /*while (!out) {
-        for (int i = 0; i < 23; i++) {
-            if (distanceMatrix[currentVertices][i] > 0) {
-                parentArray[i] += distanceMatrix[currentVertices][i];
-            }
-        }
-        nodeVisited[currentVertices] = true;
-        visitCount++;
-        for (int i = 0; i < 23; i++) {
-            if (parentArray[i] < parentArray[shortest] && !nodeVisited[i]) {
-                shortest = i;
-            }
-        }
-        currentVertices = shortest;
-        if (visitCount >= 23) {
-            out = true;
-        }
-    }*/
 
 }
 
 void showGraph()
 {
-    cout << "Node: \t\t\t Closest Distance: \t\t\t Closest Node";
-
-    for (int i = 0; i < 23; i++)
+    cout << "Node: \t\t\t Closest Distance: \t\t\t Closest Node\n";
+    int shortest = 0;
+    for (int i = 0; i < 4; i++) {
+        if (distanceArray[chargeStation[i]] < distanceArray[chargeStation[shortest]]) {
+            shortest = i;
+        }
+    }
+    cout << locationName(chargeStation[shortest]) << " got the shortest distance\n";
+    /*for (int i = 0; i < 23; i++)
     {
         cout << locationName(i) << "\t\t\t" << distanceArray[i] << "\t\t\t" << " ";
 
@@ -231,11 +216,21 @@ void showGraph()
 
         while (parentNode != location(startingPoint))
         {
-            cout << " <-- " << parentNode << " ";
+            cout << " --> " << locationName(parentNode) << " ";
             parentNode = parentArray[parentNode];
         }
+        cout << " --> " << locationName(location(startingPoint));
         cout << endl;
+    }*/
+    cout << distanceArray[chargeStation[shortest]] << " " << locationName(chargeStation[shortest]) << " ";
+    int parentNode = parentArray[chargeStation[shortest]];
+
+    while (parentNode != location(startingPoint))
+    {
+        cout << " --> " << locationName(parentNode) << " ";
+        parentNode = parentArray[parentNode];
     }
+    cout << " --> " << locationName(location(startingPoint));
 }
 
 
@@ -244,28 +239,23 @@ int main()
     string myText;
     string file_contents;
     ifstream MyReadFile("EVChargeStation.csv");
-    if (MyReadFile.is_open()) {
-        while (getline(MyReadFile, myText)) {
-            stringstream ss(myText);
-            string token;
-            int numRows = 0;
 
-            string line;
-            while (getline(MyReadFile, line) && numRows < 23) {
-                stringstream ss(line);
+    if (MyReadFile.is_open()) {
+            int numRows = 0;
+            while (getline(MyReadFile, myText) && numRows < 23) {
+                stringstream ss(myText);
                 int col = 0;
 
-                while (getline(ss, line, ',') && col < 23) {
+                while (getline(ss, myText, ',') && col < 23) {
                     // Convert string to integer
-                    distanceMatrix[numRows][col] = stoi(line);
+                    distanceMatrix[numRows][col] = stoi(myText);
                     col++;
                 }
 
                 numRows++;
             }
 
-            MyReadFile.close();
-        }
+        MyReadFile.close();
     }
 
     //Taking User Input to build the graph
@@ -281,6 +271,9 @@ int main()
         cout << locationName(i) << ": ";
         for (int j = 0; j < 23; ++j) {
             cout << distanceMatrix[i][j];
+            if (distanceMatrix[i][j] > 0) {
+                cout << locationName(j);
+            }
             if (j < 22) {
                 cout << ", ";
             }
@@ -288,9 +281,9 @@ int main()
         cout << endl;
     }
 
+
     cout << "Please input the Starting Node: A to W" << endl;
     cin >> startingPoint;
-    currentVertices = location(startingPoint);
     initializeDistances();
     dijkstraAlgorithm();
 
