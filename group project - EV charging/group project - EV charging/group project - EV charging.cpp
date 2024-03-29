@@ -160,6 +160,7 @@ void initializeDistances() //Function to initialize distance values
     distanceArray[location(startingPoint)] = 0;
 }
 
+
 int getClosestNode() //Returns the closest unvisited node
 {
     //int minimumDistanceValue = infinity;
@@ -199,13 +200,6 @@ void dijkstraAlgorithm()
 
 void showGraph()
 {
-    int shortest = 0;
-    for (int i = 0; i < 4; i++) {
-        if (distanceArray[chargeStation[i]] < distanceArray[chargeStation[shortest]]) {
-            shortest = i;
-        }
-    }
-    cout << locationName(chargeStation[shortest]) << " got the shortest distance\n";
     /*for (int i = 0; i < 23; i++)
     {
         cout << locationName(i) << "\t\t\t" << distanceArray[i] << "\t\t\t" << " ";
@@ -221,15 +215,23 @@ void showGraph()
         cout << " --> " << locationName(location(startingPoint));
         cout << endl;
     }*/
-    cout << distanceArray[chargeStation[shortest]] << " " << locationName(chargeStation[shortest]) << " ";
-    int parentNode = parentArray[chargeStation[shortest]];
+    int shortest = 0;
+    for (int i = 0; i < 4; i++) {
+        cout << distanceArray[chargeStation[i]] << " " << locationName(chargeStation[i]) << " ";
+        int parentNode = parentArray[chargeStation[i]];
 
-    while (parentNode != location(startingPoint))
-    {
-        cout << " --> " << locationName(parentNode) << " ";
-        parentNode = parentArray[parentNode];
+        while (parentNode != location(startingPoint))
+        {
+            cout << " --> " << locationName(parentNode) << " ";
+            parentNode = parentArray[parentNode];
+        }
+        cout << " --> " << locationName(location(startingPoint)) << endl;
+
+        if (distanceArray[chargeStation[i]] < distanceArray[chargeStation[shortest]]) {
+            shortest = i;
+        }
     }
-    cout << " --> " << locationName(location(startingPoint));
+    cout << locationName(chargeStation[shortest]) << " got the shortest distance\n";
 }
 
 
@@ -258,29 +260,16 @@ int main()
     }
 
     //Taking User Input to build the graph
-    /*cout << "   ";
+    cout << "Start:\t\t" << "Destination:\n";
     for (int i = 0; i < 23; i++) {
-        cout << locationName(i);
-        if (i < 22) {
-            cout << ", ";
-        }
-    }
-    cout << endl;
-    for (int i = 0; i < 23; i++) {
-        cout << locationName(i) << ": ";
+        cout << locationName(i) << ": \t\t";
         for (int j = 0; j < 23; ++j) {
-            cout << distanceMatrix[i][j];
             if (distanceMatrix[i][j] > 0) {
-                cout << locationName(j);
-            }
-            if (j < 22) {
-                cout << ", ";
+                cout << "--> " << locationName(j) << "(" << distanceMatrix[i][j] << ")";
             }
         }
         cout << endl;
-    }*/
-
-
+    }
     cout << "Please input the Starting Node: A to W" << endl;
     cin >> startingPoint;
     initializeDistances();
